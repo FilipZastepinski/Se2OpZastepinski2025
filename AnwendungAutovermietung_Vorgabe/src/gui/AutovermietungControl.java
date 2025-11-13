@@ -49,15 +49,19 @@ public class AutovermietungControl {
 		  
     void leseAusDatei(String typ){
     	try {
+      		anwModel.leseAusDatei(typ);
+      		
       		if("csv".equals(typ)){
-      			anwModel.leseAusDatei(typ);
-      	  			anwView.zeigeInformationsfensterAn(
-      	  	   			"Das Auto wurde gelesen!");
+      	  		anwView.zeigeInformationsfensterAn(
+      	  	   			"Das Auto wurde gelesen aus csv");
+      		}else if("txt".equals(typ)){
+      			anwView.zeigeInformationsfensterAn(
+      	  	   			"Das Auto wurde gelesen aus txt");
+      		} else {
+      			anwView.zeigeInformationsfensterAn(
+      	  	   			"Fehler beim Lesen der Daten!");
       		}
-       		else{
-	   			anwView.zeigeInformationsfensterAn(
-	   				"Noch nicht implementiert!");
-	   		}
+       
 		}
 		catch(IOException exc){
 			anwView.zeigeFehlermeldungsfensterAn(
