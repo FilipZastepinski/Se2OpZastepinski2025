@@ -1,17 +1,11 @@
-package gui;
+package gui.Autovermietung;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-
-import business.Auto;
 import business.AutovermietungModel;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ownUtil.Observer;
 
-public class AutovermietungControl {
+public class AutovermietungControl implements Observer {
 	
 	private AutovermietungModel anwModel;
 	private AutovermietungView anwView;
@@ -19,10 +13,12 @@ public class AutovermietungControl {
 	public AutovermietungControl(Stage primaryStage) {
 		
 		// Model abgekappselt
-		this.anwModel = new AutovermietungModel();
+		//this.anwModel = new AutovermietungModel();
+		this.anwModel = AutovermietungModel.getInstance();
 		// View greift auf Control und Model zu
 		this.anwView = new AutovermietungView(this,primaryStage,anwModel);
 		
+		this.anwModel.addObserver(this);
 	}
 	
 	void nehmeAutoAuf(){
@@ -34,6 +30,8 @@ public class AutovermietungControl {
        	catch(Exception exc){
        		anwView.zeigeFehlermeldungsfensterAn(exc.getMessage());
      	}
+    	
+    	this.anwModel.notifyObservers();
     }
 	
 
@@ -73,6 +71,7 @@ public class AutovermietungControl {
 			anwView.zeigeFehlermeldungsfensterAn(
 				"Unbekannter Fehler beim Lesen!");
 		}
+    	
 	}
 		
 	void schreibeAutoInCsvDatei() {
@@ -89,6 +88,14 @@ public class AutovermietungControl {
 			anwView.zeigeFehlermeldungsfensterAn(
 				"Unbekannter Fehler beim Speichern!");
 		}
+	}
+
+	@Override
+	public void update() {
+		if(this.anwModel.getAuto() != null){
+	   		anwView.txtAnzeige.setText(
+	   			this.anwModel.getAuto().gibAutoZurueck(' '));
+	   	}
 	}
 
 }

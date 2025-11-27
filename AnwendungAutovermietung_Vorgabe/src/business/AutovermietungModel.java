@@ -3,20 +3,40 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Vector;
 
 import fileCreatorsZastepinski.ConcreteCsvReaderCreator;
 import fileCreatorsZastepinski.ConcreteTxtReaderCreator;
 import fileCreatorsZastepinski.ReaderCreatorZastepinski;
 import fileCreatorsZastepinski.ReaderProductZastepinski;
+import ownUtil.Observable;
+import ownUtil.Observer;
 
-public class AutovermietungModel {
+public class AutovermietungModel implements Observable {
 
 	// speichert temporaer ein Objekt vom Typ Auto
 	public Auto auto;
+	
+	public Auto getAuto() {
+		return auto;
+	}
+	
+	// -------- Singleton start -------
+	
+	public static AutovermietungModel autovermietungModel;
 
-	public AutovermietungModel() {
+	private AutovermietungModel() {
 
 	}
+	
+	public static AutovermietungModel getInstance() {
+		if (autovermietungModel == null) {
+			autovermietungModel = new AutovermietungModel();
+		}
+		return autovermietungModel;
+	}
+	
+	// -------- Singleton ende -------
 
 	public void nehmeAutoAuf(String kennzeichen, String typ, String modell, float tagespreis, String[] vermietetVonBis) {
 		this.auto = new Auto(kennzeichen, typ, modell, tagespreis, vermietetVonBis);
@@ -57,22 +77,49 @@ public class AutovermietungModel {
   			Float.parseFloat(zeile[3]), 
   			zeile[4].split("_"));
 		reader.schliesseDatei();
+		
+		notifyObservers();
 	}
 	
 	public void leseAutovermietungAusTxtDatei() throws IOException{
 			
-			ReaderCreatorZastepinski creator = new ConcreteTxtReaderCreator();
+		ReaderCreatorZastepinski creator = new ConcreteTxtReaderCreator();
 			
-			ReaderProductZastepinski reader = creator.factoryMethod();
-			
-			String[] zeile = reader.leseAusDatei();
-			this.auto 
-				= new Auto(zeile[0], 
-	  			zeile[1], 
-	  			zeile[2], 
-	  			Float.parseFloat(zeile[3]), 
-	  			zeile[4].split("_"));
-			reader.schliesseDatei();
+		ReaderProductZastepinski reader = creator.factoryMethod();
+		
+		String[] zeile = reader.leseAusDatei();
+		this.auto 
+			= new Auto(zeile[0], 
+	  		zeile[1], 
+	  		zeile[2], 
+	  		Float.parseFloat(zeile[3]), 
+	  		zeile[4].split("_"));
+		reader.schliesseDatei();
+		
+		notifyObservers();
+	}
+	
+	// Liste aller Beobachter/ Observer
+	public Vector<Observer> observers = new Vector<Observer>();
+	
+	@Override
+	public void addObserver(Observer obs) {
+		if(observers.contains(obs)) return;
+		this.observers.addElement(obs);
+	}
+
+	@Override
+	public void removeObserver(Observer obs) {
+		if(!observers.contains(obs)) return;
+		this.observers.removeElement(obs);	
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(Observer obs : observers){
+			obs.update();
+		}
+		
 	}
 	
 	

@@ -1,4 +1,4 @@
-package gui;
+package gui.Autovermietung;
 
 import business.AutovermietungModel;
 import javafx.event.ActionEvent;
@@ -170,4 +170,5 @@ public class AutovermietungView {
        	new MeldungsfensterAnzeiger(AlertType.ERROR,
         	"Fehler", meldung).zeigeMeldungsfensterAn();
     }
+
 }

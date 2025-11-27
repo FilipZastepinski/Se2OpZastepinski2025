@@ -1,7 +1,7 @@
 package main;
 
-//import gui.AutovermietungAnwendungssystem;
-import gui.AutovermietungControl;
+import gui.Autovermietung.AutovermietungControl;
+import gui.Autovermietunguebersicht.AutovermietunguebersichtControl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -12,6 +12,10 @@ public class Main extends Application {
 		//new AutovermietungAnwendungssystem(primaryStage);
 		
 		new AutovermietungControl(primaryStage);
+		
+		Stage stage = new Stage();
+		
+		new AutovermietunguebersichtControl(stage);
 	}	
 	
 	public static void main(String[] args){
