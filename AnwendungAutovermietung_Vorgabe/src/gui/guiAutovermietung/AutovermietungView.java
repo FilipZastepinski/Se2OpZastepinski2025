@@ -1,4 +1,4 @@
-package gui;
+package gui.guiAutovermietung;
 
 import business.AutovermietungModel;
 import javafx.event.ActionEvent;

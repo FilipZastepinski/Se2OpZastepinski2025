@@ -3,19 +3,36 @@ package business;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import fileCreatorsZastepinski.ConcreteCsvReaderCreator;
 import fileCreatorsZastepinski.ConcreteTxtReaderCreator;
 import fileCreatorsZastepinski.ReaderCreatorZastepinski;
 import fileCreatorsZastepinski.ReaderProductZastepinski;
+import ownUtil.Observable;
+import ownUtil.Observer;
 
-public class AutovermietungModel {
+public class AutovermietungModel implements Observable {
 
 	// speichert temporaer ein Objekt vom Typ Auto
 	public Auto auto;
+	
+	public Auto getAuto() {
+		return auto;
+	}
+	
+	// Singleton Pattern
+	public static AutovermietungModel autovermietungModel = null;
 
-	public AutovermietungModel() {
-
+	private AutovermietungModel() {
+	}
+	
+	public static AutovermietungModel getInstance() {
+		if (autovermietungModel == null) {
+			autovermietungModel = new AutovermietungModel();
+		}
+		return autovermietungModel;
 	}
 
 	public void nehmeAutoAuf(String kennzeichen, String typ, String modell, float tagespreis, String[] vermietetVonBis) {
@@ -75,6 +92,27 @@ public class AutovermietungModel {
 			reader.schliesseDatei();
 	}
 	
-	
+	// Liste in der Observer gespeichert werden
+	public List<Observer> observers = new ArrayList<>();
 
+	@Override
+	public void addObserver(Observer obs) {
+		if (observers.contains(obs)) return;
+			observers.add(obs);
+	}
+
+	@Override
+	public void removeObserver(Observer obs) {
+		if(!observers.contains(obs)) return; 
+			observers.remove(obs);
+	}
+
+	@Override
+	public void notifyObservers() {
+		for(Observer obs : observers) {
+			obs.update();
+		}
+		
+	}
+	
 }
