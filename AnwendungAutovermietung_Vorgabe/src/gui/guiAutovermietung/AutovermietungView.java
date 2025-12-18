@@ -129,36 +129,20 @@ public class AutovermietungView {
    }
    
     void initListener() {
-	    btnEingabe.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-        	    anwControl.nehmeAutoAuf();
-            }
-	    });
-	    btnAnzeige.setOnAction(new EventHandler<ActionEvent>() {
-	    	@Override
-	        public void handle(ActionEvent e) {
-	    		anwControl.zeigeAutosAn();
-	        } 
-   	    });
-	    mnItmCsvImport.setOnAction(new EventHandler<ActionEvent>() {
-	    	@Override
-	        public void handle(ActionEvent e) {
-	    		anwControl.leseAusDatei("csv");
-	    	}
-	    });
-	    mnItmTxtImport.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override
-		    public void handle(ActionEvent e) {
-		    	anwControl.leseAusDatei("txt");
-		    }
-    	});
-	    mnItmCsvExport.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				anwControl.schreibeAutoInCsvDatei();
-			}	
-	    });
+	    btnEingabe.setOnAction(e ->
+        	    anwControl.nehmeAutoAuf());
+	    
+	    btnAnzeige.setOnAction(e ->
+	    		anwControl.zeigeAutosAn());
+	    
+	    mnItmCsvImport.setOnAction(e ->
+	    		anwControl.leseAusDatei("csv"));
+	    
+	    mnItmTxtImport.setOnAction(e ->
+	    	anwControl.leseAusDatei("txt"));
+	    
+	    mnItmCsvExport.setOnAction(e ->	
+	    	anwControl.schreibeAutoInCsvDatei());
     }
     
     void zeigeInformationsfensterAn(String meldung){

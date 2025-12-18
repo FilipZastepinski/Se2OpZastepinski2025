@@ -45,9 +45,16 @@ public class AutovermietungControl implements Observer {
 	
 
     void zeigeAutosAn(){
-    	if(anwModel.auto != null){
+    	//if(anwModel.auto != null){
+    	if(anwModel.getAuto().size() > 0) {
+    		StringBuffer text = new StringBuffer();
+    		
+    		for(Auto a : anwModel.auto) {
+    			text.append(a.gibAutoZurueck(' ')).append("\n");
+    		}
+    		
     		anwModel.zeigeAutosAn();
-    		anwView.txtAnzeige.setText(anwModel.auto.gibAutoZurueck(' '));
+    		anwView.txtAnzeige.setText(anwModel.auto.get(0).gibAutoZurueck(' '));
     	}
     	else{
     		anwView.zeigeInformationsfensterAn("Bisher wurde kein Auto aufgenommen!");
@@ -101,8 +108,8 @@ public class AutovermietungControl implements Observer {
 	@Override
 	public void update() {
 		if(anwModel.auto != null){
-    		anwModel.zeigeAutosAn();
-    		anwView.txtAnzeige.setText(anwModel.auto.gibAutoZurueck(' '));
+    		anwModel.zeigeAutosAn();		// ANPASSEN HIER NICHT get(0)
+    		anwView.txtAnzeige.setText(anwModel.auto.get(0).gibAutoZurueck(' '));
     	}
 	}
 

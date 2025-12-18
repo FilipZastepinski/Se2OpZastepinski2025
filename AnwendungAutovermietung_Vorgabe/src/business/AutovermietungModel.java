@@ -16,9 +16,9 @@ import ownUtil.Observer;
 public class AutovermietungModel implements Observable {
 
 	// speichert temporaer ein Objekt vom Typ Auto
-	public Auto auto;
+	public ArrayList<Auto> auto = new ArrayList<Auto>();
 	
-	public Auto getAuto() {
+	public ArrayList<Auto> getAuto() {
 		return auto;
 	}
 	
@@ -36,60 +36,68 @@ public class AutovermietungModel implements Observable {
 	}
 
 	public void nehmeAutoAuf(String kennzeichen, String typ, String modell, float tagespreis, String[] vermietetVonBis) {
-		this.auto = new Auto(kennzeichen, typ, modell, tagespreis, vermietetVonBis);
+		this.auto.add(new Auto(kennzeichen, typ, modell, tagespreis, vermietetVonBis));
+	}
+	
+	public void addAuto(Auto auto) {
+		this.auto.add(auto);
 	}
 
 	public String zeigeAutosAn() {
-		return this.auto.gibAutoZurueck(' ');
+		String aus = null;
+			for(Auto a : auto) {
+				aus += a.gibAutoZurueck(' ');
+			}
+			return aus;
 	}
 
-	/*public void leseAusDatei(String typ) throws IOException{
+	public void leseAusDatei(String typ) throws IOException{
+		
+		String[] daten = null;
+		
       		if("csv".equals(typ)){
-      			leseAutovermietungAusCsvDatei();
+      			daten = leseAutovermietungAusCsvDatei();
       			System.out.println("csv wird gelesen!");
       		}else if("txt".equals(typ)) {
-      			leseAutovermietungAusTxtDatei();
+      			daten = leseAutovermietungAusTxtDatei();
       			System.out.println("txt wird gelesen!");
-      		}		
+      		}
       		
-	}*/
+      	// Überprüfen, ob Daten erfolgreich gelesen wurden
+    		if (daten != null && daten.length >= 5) {
+    			// Initialisieren des Getraenkemarkt-Objekts mit den gelesenen Daten
+    			this.auto.add(new Auto(daten[0], daten[1], daten[2],
+    					Float.parseFloat(daten[4]), daten[5].split("_")));
+    		} else {
+    			throw new IOException("Fehler beim Lesen der Daten aus der Datei");
+    		}
+      		
+	}
 
 	public void schreibeAutoInCsvDatei() throws IOException {
 		BufferedWriter aus = new BufferedWriter(new FileWriter("AutosAusgabe.csv", true));
-		aus.write(auto.gibAutoZurueck(';'));
+		aus.write(auto.get(0).gibAutoZurueck(';'));
 		aus.close();
 	}
 	
-	public void leseAutovermietungAusCsvDatei() throws IOException{
+	public String[] leseAutovermietungAusCsvDatei() throws IOException{
 		
 		ReaderCreatorZastepinski creator = new ConcreteCsvReaderCreator();
-		
 		ReaderProductZastepinski reader = creator.factoryMethod();
-		
-		String[] zeile = reader.leseAusDatei();
-		this.auto 
-			= new Auto(zeile[0], 
-  			zeile[1], 
-  			zeile[2], 
-  			Float.parseFloat(zeile[3]), 
-  			zeile[4].split("_"));
+		String[] aus = reader.leseAusDatei();
 		reader.schliesseDatei();
+		return aus;
+		
 	}
 	
-	public void leseAutovermietungAusTxtDatei() throws IOException{
+	public String[] leseAutovermietungAusTxtDatei() throws IOException{
 			
-			ReaderCreatorZastepinski creator = new ConcreteTxtReaderCreator();
+		ReaderCreatorZastepinski creator = new ConcreteTxtReaderCreator();
+		ReaderProductZastepinski reader = creator.factoryMethod();
+		String[] aus = reader.leseAusDatei();
+		reader.schliesseDatei();
+		return aus;
 			
-			ReaderProductZastepinski reader = creator.factoryMethod();
-			
-			String[] zeile = reader.leseAusDatei();
-			this.auto 
-				= new Auto(zeile[0], 
-	  			zeile[1], 
-	  			zeile[2], 
-	  			Float.parseFloat(zeile[3]), 
-	  			zeile[4].split("_"));
-			reader.schliesseDatei();
 	}
 	
 	// Liste in der Observer gespeichert werden

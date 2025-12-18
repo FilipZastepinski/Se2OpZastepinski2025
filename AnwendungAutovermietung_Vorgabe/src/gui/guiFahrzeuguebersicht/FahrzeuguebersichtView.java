@@ -41,7 +41,7 @@ public class FahrzeuguebersichtView {
 		lblAnzeigeAutos.setFont(font);
 		lblAnzeigeAutos.setStyle("-fx-font-weight: bold;");
 		pane.getChildren().add(lblAnzeigeAutos);
-// Textbereich	
+		// Textbereich
 		txtAnzeigeAutos.setEditable(false);
 		txtAnzeigeAutos.setLayoutX(310);
 		txtAnzeigeAutos.setLayoutY(90);
@@ -55,17 +55,13 @@ public class FahrzeuguebersichtView {
 	}
 
 	private void initListener() {
-		btnAnzeigeAutos.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				zeigeAutosAn();
-			}
-		});
+		btnAnzeigeAutos.setOnAction(e ->
+				zeigeAutosAn());
 	}
 
 	public void zeigeAutosAn() {
 		if (autovermietungModel.getAuto() != null) {
-			txtAnzeigeAutos.setText(autovermietungModel.getAuto().gibAutoZurueck(' '));
+			txtAnzeigeAutos.setText(autovermietungModel.getAuto().get(0).gibAutoZurueck(' '));
 		} else {
 			zeigeInformationsfensterAn("Bisher wurde kein Auto aufgenommen!");
 		}

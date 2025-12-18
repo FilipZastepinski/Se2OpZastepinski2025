@@ -18,8 +18,15 @@ public class FahrzeuguebersichtControl implements Observer {
 	@Override
 	public void update() {
 		if (autovermietungModel.getAuto() != null) {
+			
+			String erg = null;
+			
+			for(int i = 0; i < autovermietungModel.getAuto().size(); i++) {
+				erg += autovermietungModel.getAuto().get(i).gibAutoZurueck(' ');
+			}
+			
 			this.fahrzeuguebersichtView.txtAnzeigeAutos.setText(
-					autovermietungModel.getAuto().gibAutoZurueck(' '));
+					erg);
 		}
 
 	}
