@@ -135,7 +135,7 @@ public class AutovermietungView {
 	    
 	    mnItmCsvImport.setOnAction(e -> anwControl.leseAusDatei("csv"));
 	    	
-	    mnItmTxtImport.setOnAction( e ->anwControl.leseAusDatei("txt"));
+	    mnItmTxtImport.setOnAction( e -> anwControl.leseAusDatei("txt"));
     	
 	    mnItmCsvExport.setOnAction( e -> anwControl.schreibeAutoInCsvDatei());
 	    

@@ -42,7 +42,9 @@ public class AutovermietungControl implements Observer {
        	catch(Exception exc){
        		anwView.zeigeFehlermeldungsfensterAn(exc.getMessage());
      	}
-    	this.anwModel.notifyObservers();
+    	// Wird (und soll) im Model aufgerufen, und zwar bei der
+    	// addAuto() Methode, die hier von anwModel.nehmeAutoAuf() gerufen wird.
+    	//this.anwModel.notifyObservers();
     	
     }
 	
@@ -73,7 +75,7 @@ public class AutovermietungControl implements Observer {
     		}else {
     			anwView.zeigeFehlermeldungsfensterAn(typ + " entspricht nicht csv oder txt");
     		}
-    		// Wird schon in anwModel.leseAutovermietungAusCsv/TxtDatei ausgefuehrt
+    		// Wird schon mit anwModel.leseAutovermietungAusCsv/TxtDatei ausgefuehrt
     		//this.anwModel.notifyObservers();
       	  		
 		}

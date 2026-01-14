@@ -29,6 +29,7 @@ public class AutovermietungModel implements Observable {
 		// Ergänzen
 		if (auto == null) return;
 		this.autos.add(auto);
+		notifyObservers();
 	}
 	
 	// Singleton Pattern
@@ -96,7 +97,8 @@ public class AutovermietungModel implements Observable {
 		
 		reader.schliesseDatei();
 		
-		notifyObservers();
+		// addAuto ruft schon auf
+		//notifyObservers();
 	}
 	
 	public void leseAutovermietungAusTxtDatei() throws IOException{
@@ -118,7 +120,8 @@ public class AutovermietungModel implements Observable {
 		
 		reader.schliesseDatei();
 		
-		notifyObservers();
+		// addAuto ruft schon auf
+		//notifyObservers();
 	}
 	
 	// Liste in der Observer gespeichert werden
