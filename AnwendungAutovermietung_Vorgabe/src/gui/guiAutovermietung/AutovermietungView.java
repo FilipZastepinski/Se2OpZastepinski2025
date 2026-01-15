@@ -1,6 +1,6 @@
 package gui.guiAutovermietung;
 
-import business.AutovermietungModel;
+import business.businessAutovermietung.AutovermietungModel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;

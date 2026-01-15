@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import business.Auto;
-import business.AutovermietungModel;
+import business.businessAutovermietung.Auto;
+import business.businessAutovermietung.AutovermietungModel;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import ownUtil.Observer;

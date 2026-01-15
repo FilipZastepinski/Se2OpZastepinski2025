@@ -6,7 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import business.Auto;
+import business.businessAutovermietung.Auto;
 import javafx.event.*;
 import javafx.scene.Scene;
 import javafx.scene.control.*;

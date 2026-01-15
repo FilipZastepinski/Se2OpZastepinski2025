@@ -6,6 +6,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import business.businessAutovermietung.Auto;
+
 class AutoTest { //E-AR-234;Opel;Mokka;66;20251213-20251216_20251218-20251223
 	
 	private Auto auto;
